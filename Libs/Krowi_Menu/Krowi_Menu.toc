@@ -1,0 +1,27 @@
+#
+#    Copyright (c) 2023 Krowi
+#
+#    All Rights Reserved unless otherwise explicitly stated.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+
+## Interface: 110207, 50503, 11508
+## Title: Krowi's |cFF1D92C2Menu|r
+## Version: 1.0.8
+## Author: Krowi
+## Notes: A lightweight menu library for creating dropdown menus with support for titles, separators, and nested items
+## X-Discord-Invite-Link: https://discord.gg/mdBFQJYeQZ
+## X-Discord-Server-Name: Krowi's Addons
+## X-CurseForge: https://www.curseforge.com/wow/addons/krowi-menu
+## X-Curse-Project-ID: 1400029
+## X-Wago: https://addons.wago.io/addons/krowi-menu
+## X-Wago-ID: ZKxqdvGk
+
+Krowi_Menu-1.0.xml

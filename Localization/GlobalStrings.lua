@@ -1,0 +1,2 @@
+-- This file contains references to Blizzard's global strings
+-- Used for consistency with the game's built-in localization

@@ -1,0 +1,37 @@
+## Interface: 110207, 50503, 11508
+## Title: Krowi's Brokers |cFF1D92C2[Template]|r
+## X-Prefix: KrowiBTE
+## X-Acronym: KBTE
+## Version: 1.0
+## Author: Krowi-Frostmane EU
+## SavedVariables: KrowiBTE_Options, KrowiBTE_SavedData
+## Notes: [Template] Describe your addon functionality here
+## IconTexture: Interface\Icons\INV_Misc_QuestionMark
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## Category: Data Broker
+## Category-deDE: Datenbroker
+## Category-esES: Intermediario de Datos
+## Category-esMX: Intermediario de Datos
+## Category-frFR: Courtier de Données
+## Category-itIT: Data Broker
+## Category-koKR:
+## Category-ptBR: Corretor de Dados
+## Category-ruRU: Посредник данных
+## Category-zhCN: 数据管理
+## Category-zhTW: 資料管理
+## X-Discord-Invite-Link: https://discord.gg/mdBFQJYeQZ
+## X-Discord-Server-Name: Krowi's Addons
+## X-CurseForge: https://www.curseforge.com/wow/addons/krowi-brokers-template
+## X-Curse-Project-ID: 
+## X-Wago: https://addons.wago.io/addons/krowi-brokers-template
+## X-Wago-ID: 
+
+Libs\Files.xml
+
+Localization\Files.xml
+
+# Potentially other files
+Tooltip.lua
+Menu.luas
+Krowi_Brokers_Template.lua
