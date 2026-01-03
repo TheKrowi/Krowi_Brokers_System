@@ -1,35 +1,37 @@
-local _, addon = ...;
+local _, addon = ...
 
-local system = {};
-addon.System = system;
+local system = {}
+addon.System = system
 
+-- Initialization
 function system.Init()
-	system.ResetFPSTracking();
+	system.ResetFPSTracking()
 end
 
-local min, max, total, count = nil, nil, 0, 0;
+-- FPS Tracking
+local min, max, total, count, currentFps
+local fpsStats = {}
+
 function system.ResetFPSTracking()
-	min = nil;
-	max = nil;
-	total = 0;
-	count = 0;
+	min = nil
+	max = nil
+	total = 0
+	count = 0
 end
 
-local currentFps
-local fpsStats = {Min = 0, Max = 0, Average = 0, Current = 0}
 function system.UpdateFps()
-	currentFps = GetFramerate();
+	currentFps = GetFramerate()
 
 	if not min or currentFps < min then
-		min = currentFps;
+		min = currentFps
 	end
 
 	if not max or currentFps > max then
-		max = currentFps;
+		max = currentFps
 	end
 
-	total = total + currentFps;
-	count = count + 1;
+	total = total + currentFps
+	count = count + 1
 end
 
 function system.GetFpsStats()
@@ -40,8 +42,10 @@ function system.GetFpsStats()
 	return fpsStats
 end
 
+-- Network Stats
 local bandwidthIn, bandwidthOut, latencyHome, latencyWorld
-local netStats = {BandwidthIn = 0, BandwidthOut = 0, LatencyHome = 0, LatencyWorld = 0}
+local netStats = {}
+
 function system.GetNetStats()
     bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
     netStats.BandwidthIn = bandwidthIn
@@ -51,95 +55,95 @@ function system.GetNetStats()
     return netStats
 end
 
+-- CPU Profiling
 function system.IsCPUProfilingEnabled()
-	return GetCVar("scriptProfile") == "1";
+	return GetCVar("scriptProfile") == "1"
 end
 
-local previousMemory = {};
+-- Addon Stats
+local previousMemory = {}
+local previousCPU = {}
 local cpuProfilingEnabled = system.IsCPUProfilingEnabled()
 local addons = {}
 local addonDataPool = {}
-local totalMemory, totalMemoryIncrease, numAddons
-local title, mem, memIncrease, cpu
+local totalMemory, totalMemoryIncrease, totalCPU, totalCPUIncrease, numAddons
+local title, mem, memIncrease, cpu, cpuIncrease
 local sortBy
 local addonCount, addonData
 
--- Reusable sort functions
 local function sortByMemory(a, b) return a.Memory > b.Memory end
 local function sortByMemoryIncrease(a, b) return a.MemoryIncrease > b.MemoryIncrease end
 local function sortByCPU(a, b) return a.CPU > b.CPU end
+local function sortByCPUIncrease(a, b) return a.CPUIncrease > b.CPUIncrease end
 local function sortByName(a, b) return a.Name < b.Name end
 
 function system.GetAllAddOnStats()
-	UpdateAddOnMemoryUsage();
+	UpdateAddOnMemoryUsage()
 	
 	if cpuProfilingEnabled then
-		UpdateAddOnCPUUsage();
+		UpdateAddOnCPUUsage()
 	end
 
-	-- Reset counters
-	totalMemory = 0;
-	totalMemoryIncrease = 0;
-	addonCount = 0;
-	numAddons = C_AddOns.GetNumAddOns();
+	totalMemory = 0
+	totalMemoryIncrease = 0
+	totalCPU = 0
+	totalCPUIncrease = 0
+	addonCount = 0
+	numAddons = C_AddOns.GetNumAddOns()
 
 	for i = 1, numAddons do
 		if C_AddOns.IsAddOnLoaded(i) then
-			_, title = C_AddOns.GetAddOnInfo(i);
-			mem = GetAddOnMemoryUsage(i);
-			cpu = cpuProfilingEnabled and GetAddOnCPUUsage(i) or 0;
+			_, title = C_AddOns.GetAddOnInfo(i)
+			mem = GetAddOnMemoryUsage(i)
+			cpu = cpuProfilingEnabled and GetAddOnCPUUsage(i) or 0
 
-			memIncrease = 0;
+			memIncrease = 0
 			if previousMemory[i] then
-				memIncrease = mem - previousMemory[i];
+				memIncrease = mem - previousMemory[i]
 			end
-			previousMemory[i] = mem;
+			previousMemory[i] = mem
 
-			totalMemory = totalMemory + mem;
-			totalMemoryIncrease = totalMemoryIncrease + memIncrease;
+			cpuIncrease = 0
+			if previousCPU[i] then
+				cpuIncrease = cpu - previousCPU[i]
+			end
+			previousCPU[i] = cpu
 
-			addonCount = addonCount + 1;
+			totalMemory = totalMemory + mem
+			totalMemoryIncrease = totalMemoryIncrease + memIncrease
+			totalCPU = totalCPU + cpu
+			totalCPUIncrease = totalCPUIncrease + cpuIncrease
+
+			addonCount = addonCount + 1
 			
-			-- Reuse existing table or get from pool
-			addonData = addons[addonCount] or addonDataPool[addonCount] or {};
-			addonData.Name = title;
-			addonData.Memory = mem;
-			addonData.MemoryIncrease = memIncrease;
-			addonData.CPU = cpu;
+			addonData = addons[addonCount] or addonDataPool[addonCount] or {}
+			addonData.Name = title
+			addonData.Memory = mem
+			addonData.MemoryIncrease = memIncrease
+			addonData.CPU = cpu
+			addonData.CPUIncrease = cpuIncrease
 			
-			-- Reuse or create closure functions
-			if not addonData.GetMemoryPercent then
-				addonData.GetMemoryPercent = function()
-					return totalMemory > 0 and (addonData.Memory / totalMemory) or 0;
-				end
-			end
-			if not addonData.GetMemoryIncreasePercent then
-				addonData.GetMemoryIncreasePercent = function()
-					return totalMemoryIncrease ~= 0 and (addonData.MemoryIncrease / totalMemoryIncrease) or 0;
-				end
-			end
-			
-			addons[addonCount] = addonData;
+			addons[addonCount] = addonData
 		end
 	end
 	
-	-- Store extra tables for reuse and clear unused entries
 	for i = addonCount + 1, #addons do
-		addonDataPool[i] = addons[i];
-		addons[i] = nil;
+		addonDataPool[i] = addons[i]
+		addons[i] = nil
 	end
 
-	-- Sort addons based on selected option
-	sortBy = KrowiBSY_Options.AddOnSortBy or "Name";
+	sortBy = KrowiBSY_Options.AddOnSortBy or "Name"
 	if sortBy == "Memory" then
-		table.sort(addons, sortByMemory);
+		table.sort(addons, sortByMemory)
 	elseif sortBy == "MemoryIncrease" then
-		table.sort(addons, sortByMemoryIncrease);
+		table.sort(addons, sortByMemoryIncrease)
 	elseif sortBy == "CPU" then
-		table.sort(addons, sortByCPU);
-	else -- Name
-		table.sort(addons, sortByName);
+		table.sort(addons, sortByCPU)
+	elseif sortBy == "CPUIncrease" then
+		table.sort(addons, sortByCPUIncrease)
+	else
+		table.sort(addons, sortByName)
 	end
 
-	return addons;
+	return addons, totalMemory, totalMemoryIncrease, totalCPU, totalCPUIncrease
 end

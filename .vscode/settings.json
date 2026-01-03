@@ -103,6 +103,7 @@
         "UpdateAddOnCPUUsage",
         "IsShiftKeyDown",
         "IsControlKeyDown",
+        "IsAltKeyDown",
         "SetCVar",
         "ReloadUI"
     ],
