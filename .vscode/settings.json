@@ -88,6 +88,22 @@
         "CreateFrame",
         "Krowi_Brokers_EventFrame",
         "GameTooltip_AddBlankLineToTooltip",
-        "GetFramerate"
+        "GetFramerate",
+        "C_Timer",
+        "GetNetStats",
+        "GetCVar",
+        "GetAvailableBandwidth",
+        "GetDownloadedPercentage",
+        "GetBackgroundLoadingStatus",
+        "GetFileStreamingStatus",
+        "C_AddOns",
+        "GetAddOnMemoryUsage",
+        "GetAddOnCPUUsage",
+        "UpdateAddOnMemoryUsage",
+        "UpdateAddOnCPUUsage",
+        "IsShiftKeyDown",
+        "IsControlKeyDown",
+        "SetCVar",
+        "ReloadUI"
     ],
 }
