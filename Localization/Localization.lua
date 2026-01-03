@@ -1,20 +1,7 @@
-local _, addon = ...;
-
-local localization = {};
-addon.Localization = localization;
+local addonName, addon = ...;
+addon.Localization = {};
+local localization = addon.Localization;
 
 function localization.GetDefaultLocale()
-	local L = {};
-	
-	return setmetatable(L, {
-		__newindex = function(self, key, value)
-			if value == true then
-				value = key;
-			end
-			rawset(self, key, value);
-		end,
-		__index = function(self, key)
-			return key;
-		end
-	});
+    return LibStub(addon.Libs.AceLocale):NewLocale(addonName, "enUS", true, true);
 end

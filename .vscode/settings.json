@@ -87,6 +87,7 @@
         "GameTooltip",
         "CreateFrame",
         "Krowi_Brokers_EventFrame",
-        "GameTooltip_AddBlankLineToTooltip"
+        "GameTooltip_AddBlankLineToTooltip",
+        "GetFramerate"
     ],
 }

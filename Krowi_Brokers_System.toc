@@ -1,11 +1,11 @@
 ## Interface: 110207, 50503, 11508
-## Title: Krowi's Brokers |cFF1D92C2[Template]|r
-## X-Prefix: KrowiBTE
-## X-Acronym: KBTE
+## Title: Krowi's Brokers |cFF1D92C2[System]|r
+## X-Prefix: KrowiBSY
+## X-Acronym: KBSY
 ## Version: 1.0
 ## Author: Krowi-Frostmane EU
-## SavedVariables: KrowiBTE_Options, KrowiBTE_SavedData
-## Notes: [Template] Describe your addon functionality here
+## SavedVariables: KrowiBSY_Options, KrowiBSY_SavedData
+## Notes: [System] Describe your addon functionality here
 ## IconTexture: Interface\Icons\INV_Misc_QuestionMark
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
@@ -22,16 +22,17 @@
 ## Category-zhTW: 資料管理
 ## X-Discord-Invite-Link: https://discord.gg/mdBFQJYeQZ
 ## X-Discord-Server-Name: Krowi's Addons
-## X-CurseForge: https://www.curseforge.com/wow/addons/krowi-brokers-template
-## X-Curse-Project-ID: 
-## X-Wago: https://addons.wago.io/addons/krowi-brokers-template
-## X-Wago-ID: 
+## X-CurseForge: https://www.curseforge.com/wow/addons/krowi-brokers-system
+## X-Curse-Project-ID: 1419755
+## X-Wago: https://addons.wago.io/addons/krowi-brokers-system
+## X-Wago-ID: n6VPkqGd
 
 Libs\Files.xml
 
 Localization\Files.xml
 
-# Potentially other files
+System.lua
+
 Tooltip.lua
-Menu.luas
-Krowi_Brokers_Template.lua
+Menu.lua
+Krowi_Brokers_System.lua

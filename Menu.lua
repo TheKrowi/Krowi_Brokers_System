@@ -13,11 +13,11 @@ function menu.Init()
 		callbacks = {
 			OnCheckboxSelect = function(filters, keys)
 				addon.Util.WriteNestedKeys(filters, keys, not menuBuilder:KeyIsTrue(filters, keys));
-				addon.TemplateLDB:Update();
+				addon.LDB:Update();
 			end,
 			OnRadioSelect = function(filters, keys, value)
 				addon.Util.WriteNestedKeys(filters, keys, value);
-				addon.TemplateLDB:Update();
+				addon.LDB:Update();
 			end
 		}
 	});
@@ -31,8 +31,8 @@ function CreateMenu(menuObj)
 	-- Examples
 	menuBuilder:CreateTitle(menuObj, addon.L["Time Format"]);
 	local timeFormat = menuBuilder:CreateSubmenuButton(menuObj, addon.L["Format"]);
-	menuBuilder:CreateRadio(timeFormat, addon.L["12 Hour"], KrowiBTE_Options, {"TimeFormat"}, "12H");
-	menuBuilder:CreateRadio(timeFormat, addon.L["24 Hour"], KrowiBTE_Options, {"TimeFormat"}, "24H");
+	menuBuilder:CreateRadio(timeFormat, addon.L["12 Hour"], KrowiBSY_Options, {"TimeFormat"}, "12H");
+	menuBuilder:CreateRadio(timeFormat, addon.L["24 Hour"], KrowiBSY_Options, {"TimeFormat"}, "24H");
 	menuBuilder:AddChildMenu(menuObj, timeFormat);
 
 	menuBuilder:CreateDivider(menuObj);
@@ -40,14 +40,14 @@ function CreateMenu(menuObj)
 	menuBuilder:CreateTitle(menuObj, addon.L["Time Display"]);
 
 	local timeMode = menuBuilder:CreateSubmenuButton(menuObj, addon.L["Display Mode"]);
-	menuBuilder:CreateRadio(timeMode, addon.L["Local Time"], KrowiBTE_Options, {"TimeMode"}, "Local");
-	menuBuilder:CreateRadio(timeMode, addon.L["Server Time"], KrowiBTE_Options, {"TimeMode"}, "Server");
-	menuBuilder:CreateRadio(timeMode, addon.L["Both"], KrowiBTE_Options, {"TimeMode"}, "Both");
+	menuBuilder:CreateRadio(timeMode, addon.L["Local Time"], KrowiBSY_Options, {"TimeMode"}, "Local");
+	menuBuilder:CreateRadio(timeMode, addon.L["Server Time"], KrowiBSY_Options, {"TimeMode"}, "Server");
+	menuBuilder:CreateRadio(timeMode, addon.L["Both"], KrowiBSY_Options, {"TimeMode"}, "Both");
 	menuBuilder:AddChildMenu(menuObj, timeMode);
 
 	menuBuilder:CreateDivider(menuObj);
 
-	menuBuilder:CreateCheckbox(menuObj, addon.L["Show Seconds"], KrowiBTE_Options, {"ShowSeconds"});
+	menuBuilder:CreateCheckbox(menuObj, addon.L["Show Seconds"], KrowiBSY_Options, {"ShowSeconds"});
 
 	-- Other menu items can be added here
 end
