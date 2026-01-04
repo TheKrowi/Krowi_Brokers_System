@@ -57,7 +57,7 @@ end
 
 -- CPU Profiling
 function system.IsCPUProfilingEnabled()
-	return GetCVar("scriptProfile") == "1"
+	return GetCVar('scriptProfile') == '1'
 end
 
 -- Addon Stats
@@ -71,11 +71,41 @@ local title, mem, memIncrease, cpu, cpuIncrease
 local sortBy
 local addonCount, addonData
 
-local function sortByMemory(a, b) return a.Memory > b.Memory end
-local function sortByMemoryIncrease(a, b) return a.MemoryIncrease > b.MemoryIncrease end
-local function sortByCPU(a, b) return a.CPU > b.CPU end
-local function sortByCPUIncrease(a, b) return a.CPUIncrease > b.CPUIncrease end
-local function sortByName(a, b) return a.Name < b.Name end
+local function sortByMemory(a, b)
+	if not a or not b then return false end
+	if KrowiBSY_Options.AddOnSortReverse then
+		return a.Memory < b.Memory
+	end
+	return a.Memory > b.Memory
+end
+local function sortByMemoryIncrease(a, b)
+	if not a or not b then return false end
+	if KrowiBSY_Options.AddOnSortReverse then
+		return a.MemoryIncrease < b.MemoryIncrease
+	end
+	return a.MemoryIncrease > b.MemoryIncrease
+end
+local function sortByCPU(a, b)
+	if not a or not b then return false end
+	if KrowiBSY_Options.AddOnSortReverse then
+		return a.CPU < b.CPU
+	end
+	return a.CPU > b.CPU
+end
+local function sortByCPUIncrease(a, b)
+	if not a or not b then return false end
+	if KrowiBSY_Options.AddOnSortReverse then
+		return a.CPUIncrease < b.CPUIncrease
+	end
+	return a.CPUIncrease > b.CPUIncrease
+end
+local function sortByName(a, b)
+	if not a or not b then return false end
+	if KrowiBSY_Options.AddOnSortReverse then
+		return a.Name > b.Name
+	end
+	return a.Name < b.Name
+end
 
 function system.GetAllAddOnStats()
 	UpdateAddOnMemoryUsage()
@@ -132,14 +162,14 @@ function system.GetAllAddOnStats()
 		addons[i] = nil
 	end
 
-	sortBy = KrowiBSY_Options.AddOnSortBy or "Name"
-	if sortBy == "Memory" then
+	sortBy = KrowiBSY_Options.AddOnSortBy
+	if sortBy == 'Memory' then
 		table.sort(addons, sortByMemory)
-	elseif sortBy == "MemoryIncrease" then
+	elseif sortBy == 'MemoryIncrease' then
 		table.sort(addons, sortByMemoryIncrease)
-	elseif sortBy == "CPU" then
+	elseif sortBy == 'CPU' then
 		table.sort(addons, sortByCPU)
-	elseif sortBy == "CPUIncrease" then
+	elseif sortBy == 'CPUIncrease' then
 		table.sort(addons, sortByCPUIncrease)
 	else
 		table.sort(addons, sortByName)

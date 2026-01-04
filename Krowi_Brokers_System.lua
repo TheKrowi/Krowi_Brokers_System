@@ -15,7 +15,7 @@ KrowiBSY_Options = KrowiBSY_Options or {
 	FpsShowAverage = false,
 	FpsShowAverageLabel = false,
 	LatencyShowLabel = true,
-	LatencyLabelType = "MS",
+	LatencyLabelType = 'MS',
 	LatencyShowHome = false,
 	LatencyShowHomeLabel = false,
 	LatencyShowWorld = true,
@@ -28,9 +28,11 @@ KrowiBSY_Options = KrowiBSY_Options or {
 	BandwidthShowOut = false,
 	BandwidthShowOutLabel = false,
 	BandwidthShowKbps = false,
-	AddOnSortBy = "Memory",
-	ShowMemoryIncrease = true,
-	ShowCPUIncrease = true,
+	AddOnSortBy = 'Memory',
+	AddOnSortReverse = false,
+	ShowMemory = true,
+	ShowCPU = true,
+	ShowIncrease = true,
 }
 
 KrowiBSY_SavedData = KrowiBSY_SavedData or {}
@@ -48,10 +50,10 @@ local fpsThreshold70 = 42
 local fpsThreshold50 = 30
 
 local function GetMaxFps()
-	local useMaxFPS = GetCVar("useMaxFPS") == "1"
-	local useTargetFPS = GetCVar("useTargetFPS") == "1"
-	local maxFPS = tonumber(GetCVar("maxFPS")) or 0
-	local targetFPS = tonumber(GetCVar("targetFPS")) or 60
+	local useMaxFPS = GetCVar('useMaxFPS') == '1'
+	local useTargetFPS = GetCVar('useTargetFPS') == '1'
+	local maxFPS = tonumber(GetCVar('maxFPS')) or 0
+	local targetFPS = tonumber(GetCVar('targetFPS')) or 60
 
 	if useMaxFPS and useTargetFPS then
 		return math.min(maxFPS, targetFPS)
@@ -88,9 +90,9 @@ end
 
 function addon.FormatLatency(value, showUnit)
 	if showUnit then
-		return string.format("|c%s%d ms|r", GetLatencyColor(value), value)
+		return string.format('|c%s%d ms|r', GetLatencyColor(value), value)
 	else
-		return string.format("|c%s%d|r", GetLatencyColor(value), value)
+		return string.format('|c%s%d|r', GetLatencyColor(value), value)
 	end
 end
 
@@ -109,13 +111,13 @@ local formatters = {
 }
 
 -- Display Pattern Building
-local masterFormatPattern = ""
+local masterFormatPattern = ''
 local masterFormatStats = {}
 
 local function RefreshFormatPatterns()
-	fpsFormatPattern = "|c%s%." .. KrowiBSY_Options.FpsDecimalPlaces .. "f|r"
-	bandwidthFormatPattern = "%." .. KrowiBSY_Options.BandwidthDecimalPlaces .. "f"
-	bandwidthFormatPatternWithUnit = "%." .. KrowiBSY_Options.BandwidthDecimalPlaces .. "f kbps"
+	fpsFormatPattern = '|c%s%.' .. KrowiBSY_Options.FpsDecimalPlaces .. 'f|r'
+	bandwidthFormatPattern = '%.' .. KrowiBSY_Options.BandwidthDecimalPlaces .. 'f'
+	bandwidthFormatPatternWithUnit = '%.' .. KrowiBSY_Options.BandwidthDecimalPlaces .. 'f kbps'
 end
 
 local pattern, stats, hasContent, needsSeparator
@@ -124,9 +126,9 @@ local function AddSectionLabel(showLabel, labelKey)
 		return
 	end
 	if hasContent then
-		pattern = pattern .. " "
+		pattern = pattern .. ' '
 	end
-	pattern = pattern .. addon.L[labelKey] .. ":"
+	pattern = pattern .. addon.L[labelKey] .. ':'
 	hasContent = true
 end
 
@@ -136,42 +138,42 @@ local function AddStatItem(showStat, showLabel, labelKey, statName, formatterNam
 	end
 
 	if needsSeparator then
-		pattern = pattern .. ", "
+		pattern = pattern .. ', '
 	elseif hasContent then
-		pattern = pattern .. " "
+		pattern = pattern .. ' '
 	end
 
 	if showLabel then
-		pattern = pattern .. addon.L[labelKey] .. ": "
+		pattern = pattern .. addon.L[labelKey] .. ': '
 	end
 
-	pattern = pattern .. "%s"
+	pattern = pattern .. '%s'
 	table.insert(stats, {stat = statName, formatter = formatterName})
 	hasContent = true
 	needsSeparator = true
 end
 
 local function BuildDisplayPattern()
-	pattern = ""
+	pattern = ''
 	stats = {}
 	hasContent = false
 
-	AddSectionLabel(KrowiBSY_Options.FpsShowLabel, "FPS")
+	AddSectionLabel(KrowiBSY_Options.FpsShowLabel, 'FPS')
 	needsSeparator = false
-	AddStatItem(KrowiBSY_Options.FpsShowMin, KrowiBSY_Options.FpsShowMinLabel, "Min", "Min", "fps")
-	AddStatItem(KrowiBSY_Options.FpsShowAverage, KrowiBSY_Options.FpsShowAverageLabel, "Avg", "Average", "fps")
-	AddStatItem(KrowiBSY_Options.FpsShowMax, KrowiBSY_Options.FpsShowMaxLabel, "Max", "Max", "fps")
-	AddStatItem(KrowiBSY_Options.FpsShowCurrent, KrowiBSY_Options.FpsShowCurrentLabel, "Current", "Current", "fps")
+	AddStatItem(KrowiBSY_Options.FpsShowMin, KrowiBSY_Options.FpsShowMinLabel, 'Min', 'Min', 'fps')
+	AddStatItem(KrowiBSY_Options.FpsShowAverage, KrowiBSY_Options.FpsShowAverageLabel, 'Avg', 'Average', 'fps')
+	AddStatItem(KrowiBSY_Options.FpsShowMax, KrowiBSY_Options.FpsShowMaxLabel, 'Max', 'Max', 'fps')
+	AddStatItem(KrowiBSY_Options.FpsShowCurrent, KrowiBSY_Options.FpsShowCurrentLabel, 'Current', 'Current', 'fps')
 
-	AddSectionLabel(KrowiBSY_Options.LatencyShowLabel, KrowiBSY_Options.LatencyLabelType or "MS")
+	AddSectionLabel(KrowiBSY_Options.LatencyShowLabel, KrowiBSY_Options.LatencyLabelType or 'MS')
 	needsSeparator = false
-	AddStatItem(KrowiBSY_Options.LatencyShowHome, KrowiBSY_Options.LatencyShowHomeLabel, "Home", "LatencyHome", "latency")
-	AddStatItem(KrowiBSY_Options.LatencyShowWorld, KrowiBSY_Options.LatencyShowWorldLabel, "World", "LatencyWorld", "latency")
+	AddStatItem(KrowiBSY_Options.LatencyShowHome, KrowiBSY_Options.LatencyShowHomeLabel, 'Home', 'LatencyHome', 'latency')
+	AddStatItem(KrowiBSY_Options.LatencyShowWorld, KrowiBSY_Options.LatencyShowWorldLabel, 'World', 'LatencyWorld', 'latency')
 
-	AddSectionLabel(KrowiBSY_Options.BandwidthShowLabel, "Bandwidth")
+	AddSectionLabel(KrowiBSY_Options.BandwidthShowLabel, 'Bandwidth')
 	needsSeparator = false
-	AddStatItem(KrowiBSY_Options.BandwidthShowIn, KrowiBSY_Options.BandwidthShowInLabel, "In", "BandwidthIn", "bandwidth")
-	AddStatItem(KrowiBSY_Options.BandwidthShowOut, KrowiBSY_Options.BandwidthShowOutLabel, "Out", "BandwidthOut", "bandwidth")
+	AddStatItem(KrowiBSY_Options.BandwidthShowIn, KrowiBSY_Options.BandwidthShowInLabel, 'In', 'BandwidthIn', 'bandwidth')
+	AddStatItem(KrowiBSY_Options.BandwidthShowOut, KrowiBSY_Options.BandwidthShowOutLabel, 'Out', 'BandwidthOut', 'bandwidth')
 
 	masterFormatPattern = pattern
 	masterFormatStats = stats
@@ -191,8 +193,8 @@ function addon.GetDisplayText()
 	fpsStats = addon.System.GetFpsStats()
 	netStats = addon.System.GetNetStats()
 	
-	if masterFormatPattern == "" then
-		return ""
+	if masterFormatPattern == '' then
+		return ''
 	end
 	
 	allStats.Current = fpsStats.Current
@@ -219,18 +221,19 @@ end
 
 -- Event Handlers
 local function OnClick(self, button)
-	if button == "LeftButton" then
+	if button == 'LeftButton' then
 		if IsControlKeyDown() and IsShiftKeyDown() then
-			local currentValue = GetCVar("scriptProfile")
-			local newValue = (currentValue == "1") and "0" or "1"
-			SetCVar("scriptProfile", newValue)
+			local currentValue = GetCVar('scriptProfile')
+			local newValue = (currentValue == '1') and '0' or '1'
+			SetCVar('scriptProfile', newValue)
 			ReloadUI()
 			return
 		end
+		collectgarbage('collect')
 		return
 	end
 
-	if button ~= "RightButton" then
+	if button ~= 'RightButton' then
 		return
 	end
 
@@ -241,7 +244,7 @@ local function OnEnter(self)
 	addon.Tooltip.Show(self)
 
 	local throttle = 0
-	self:SetScript("OnUpdate", function(frame, elapsed)
+	self:SetScript('OnUpdate', function(frame, elapsed)
 		throttle = throttle + elapsed
 		if throttle < 1 then return end
 		throttle = 0
@@ -251,13 +254,13 @@ local function OnEnter(self)
 end
 
 local function OnLeave(self)
-	self:SetScript("OnUpdate", nil)
+	self:SetScript('OnUpdate', nil)
 	GameTooltip:Hide()
 end
 
 local updateTimer
 local function OnEvent(event, ...)
-	if event == "PLAYER_ENTERING_WORLD" then
+	if event == 'PLAYER_ENTERING_WORLD' then
 		addon.LDB:Update()
 
 		if updateTimer then
@@ -271,13 +274,13 @@ local function OnEvent(event, ...)
 end
 
 -- Initialization
-local brokers = LibStub("Krowi_Brokers-1.0")
+local brokers = LibStub('Krowi_Brokers-1.0')
 addon.System.Init()
 addon.RefreshDisplayConfiguration()
 brokers:InitBroker(
 	addonName,
 	addon,
-	"Interface\\Icons\\INV_Misc_QuestionMark",
+	'Interface\\Icons\\INV_Misc_QuestionMark',
 	OnEnter,
 	OnLeave,
 	OnClick,
@@ -286,4 +289,4 @@ brokers:InitBroker(
 	addon.Menu,
 	addon.Tooltip
 )
-brokers:RegisterEvents("PLAYER_ENTERING_WORLD")
+brokers:RegisterEvents('PLAYER_ENTERING_WORLD')

@@ -1,1 +1,15 @@
-Auto generated via scripts, do not manually edit
+### Added
+- Initial release
+- FPS tracking with current, minimum, maximum, and average statistics
+- Network monitoring: home and world latency, bandwidth usage
+- Addon resource tracking: memory and CPU usage per addon
+- Customizable display options for all metrics
+- Color-coded performance thresholds
+- Flexible label and decimal precision settings
+- Right-click menu for quick access to settings
+- Left-click to trigger garbage collection
+- Ctrl+Shift+Left-Click to toggle CPU profiling (requires UI reload)
+- Tooltip shows modifier key hints for toggling memory/CPU/increase display
+- Organized menu structure with submenus for each category
+- Reverse sort option for addon list
+- Flexible modifier key controls: Shift (memory), Alt (CPU), Ctrl (increases)

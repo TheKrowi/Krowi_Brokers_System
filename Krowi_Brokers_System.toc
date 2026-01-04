@@ -5,7 +5,7 @@
 ## Version: 1.0
 ## Author: Krowi-Frostmane EU
 ## SavedVariables: KrowiBSY_Options, KrowiBSY_SavedData
-## Notes: [System] Describe your addon functionality here
+## Notes: Monitors system performance with FPS tracking, latency stats, bandwidth usage, and addon memory/CPU metrics
 ## IconTexture: Interface\Icons\INV_Misc_QuestionMark
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
