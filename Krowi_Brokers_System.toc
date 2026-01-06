@@ -6,7 +6,7 @@
 ## Author: Krowi-Frostmane EU
 ## SavedVariables: KrowiBSY_Options, KrowiBSY_SavedData
 ## Notes: Monitors system performance with FPS tracking, latency stats, bandwidth usage, and addon memory/CPU metrics
-## IconTexture: Interface\Icons\INV_Misc_QuestionMark
+## IconTexture: interface\icons\inv_gizmo_02
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## Category: Data Broker

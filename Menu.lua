@@ -1,9 +1,14 @@
-local _, addon = ...
+local addonName, addon = ...
 
 local menu = {}
 addon.Menu = menu
 
 local menuBuilder
+
+function menu.RefreshBroker()
+	addon.RefreshDisplayConfiguration()
+	addon.LDB:Update()
+end
 
 function menu.Init()
 	local lib = LibStub('Krowi_MenuBuilder-1.0')
@@ -13,19 +18,17 @@ function menu.Init()
 		callbacks = {
 			OnCheckboxSelect = function(filters, keys)
 				addon.Util.WriteNestedKeys(filters, keys, not menuBuilder:KeyIsTrue(filters, keys))
-				addon.RefreshDisplayConfiguration()
-				addon.LDB:Update()
+				menu.RefreshBroker()
 			end,
 			OnRadioSelect = function(filters, keys, value)
 				addon.Util.WriteNestedKeys(filters, keys, value)
-				addon.RefreshDisplayConfiguration()
-				addon.LDB:Update()
+				menu.RefreshBroker()
 			end
 		}
 	})
 end
 
-function CreateMenu(menuObj)
+local function CreateMenu(menuObj, caller)
 	menuBuilder:CreateTitle(menuObj, addon.Metadata.Title .. ' ' .. addon.Metadata.Version)
 
 	menuBuilder:CreateDivider(menuObj)
@@ -90,11 +93,14 @@ function CreateMenu(menuObj)
 	menuBuilder:AddChildMenu(addOnOptions, addOnSortBy)
 	menuBuilder:CreateCheckbox(addOnOptions, addon.L['Reverse Sort'], KrowiBSY_Options, {'AddOnSortReverse'})
 	menuBuilder:AddChildMenu(menuObj, addOnOptions)
+
+	menu.CreateElvUIOptionsMenu(menuBuilder, menuObj, caller)
+	menu.CreateTitanOptionsMenu(menuBuilder, menuObj, caller)
 end
 
-function menu.ShowPopup()
+function menu.ShowPopup(caller)
 	menuBuilder:ShowPopup(function()
 		local menuObj = menuBuilder:GetMenu()
-		CreateMenu(menuObj)
+		CreateMenu(menuObj, caller)
 	end)
 end
