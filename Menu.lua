@@ -28,12 +28,8 @@ function menu.Init()
 	})
 end
 
-local function CreateMenu(menuObj, caller)
-	menuBuilder:CreateTitle(menuObj, addon.Metadata.Title .. ' ' .. addon.Metadata.Version)
-
-	menuBuilder:CreateDivider(menuObj)
-
-	local fpsOptions = menuBuilder:CreateSubmenuButton(menuObj, addon.L['FPS'])
+local function CreateFpsOptions(parentMenu)
+	local fpsOptions = menuBuilder:CreateSubmenuButton(parentMenu, addon.L['FPS'])
 	menuBuilder:CreateCheckbox(fpsOptions, addon.L['Show Label'], KrowiBSY_Options, {'FpsShowLabel'})
 	menuBuilder:CreateCheckbox(fpsOptions, addon.L['Show Min'], KrowiBSY_Options, {'FpsShowMin'})
 	menuBuilder:CreateCheckbox(fpsOptions, addon.L['Show Min Label'], KrowiBSY_Options, {'FpsShowMinLabel'})
@@ -48,9 +44,11 @@ local function CreateMenu(menuObj, caller)
 		menuBuilder:CreateRadio(fpsDecimalPlaces, tostring(i), KrowiBSY_Options, {'FpsDecimalPlaces'}, i)
 	end
 	menuBuilder:AddChildMenu(fpsOptions, fpsDecimalPlaces)
-	menuBuilder:AddChildMenu(menuObj, fpsOptions)
+	menuBuilder:AddChildMenu(parentMenu, fpsOptions)
+end
 
-	local latencyOptions = menuBuilder:CreateSubmenuButton(menuObj, addon.L['Latency'])
+local function CreateLatencyOptions(parentMenu)
+	local latencyOptions = menuBuilder:CreateSubmenuButton(parentMenu, addon.L['Latency'])
 	menuBuilder:CreateCheckbox(latencyOptions, addon.L['Show Label'], KrowiBSY_Options, {'LatencyShowLabel'})
 	local latencyLabelType = menuBuilder:CreateSubmenuButton(latencyOptions, addon.L['Label Type'])
 	menuBuilder:CreateRadio(latencyLabelType, addon.L['Latency'], KrowiBSY_Options, {'LatencyLabelType'}, 'Latency')
@@ -61,9 +59,11 @@ local function CreateMenu(menuObj, caller)
 	menuBuilder:CreateCheckbox(latencyOptions, addon.L['Show World'], KrowiBSY_Options, {'LatencyShowWorld'})
 	menuBuilder:CreateCheckbox(latencyOptions, addon.L['Show World Label'], KrowiBSY_Options, {'LatencyShowWorldLabel'})
 	menuBuilder:CreateCheckbox(latencyOptions, addon.L['Show ms'], KrowiBSY_Options, {'LatencyShowMs'})
-	menuBuilder:AddChildMenu(menuObj, latencyOptions)
+	menuBuilder:AddChildMenu(parentMenu, latencyOptions)
+end
 
-	local bandwidthOptions = menuBuilder:CreateSubmenuButton(menuObj, addon.L['Bandwidth'])
+local function CreateBandwidthOptions(parentMenu)
+	local bandwidthOptions = menuBuilder:CreateSubmenuButton(parentMenu, addon.L['Bandwidth'])
 	menuBuilder:CreateCheckbox(bandwidthOptions, addon.L['Show Label'], KrowiBSY_Options, {'BandwidthShowLabel'})
 	menuBuilder:CreateCheckbox(bandwidthOptions, addon.L['Show In'], KrowiBSY_Options, {'BandwidthShowIn'})
 	menuBuilder:CreateCheckbox(bandwidthOptions, addon.L['Show In Label'], KrowiBSY_Options, {'BandwidthShowInLabel'})
@@ -75,13 +75,21 @@ local function CreateMenu(menuObj, caller)
 		menuBuilder:CreateRadio(bandwidthDecimalPlaces, tostring(i), KrowiBSY_Options, {'BandwidthDecimalPlaces'}, i)
 	end
 	menuBuilder:AddChildMenu(bandwidthOptions, bandwidthDecimalPlaces)
-	menuBuilder:AddChildMenu(menuObj, bandwidthOptions)
+	menuBuilder:AddChildMenu(parentMenu, bandwidthOptions)
+end
 
-	local addOnOptions = menuBuilder:CreateSubmenuButton(menuObj, addon.L['AddOn'])
+local function CreateAddOnOptions(parentMenu)
+	local addOnOptions = menuBuilder:CreateSubmenuButton(parentMenu, addon.L['AddOn'])
 	menuBuilder:CreateCheckbox(addOnOptions, addon.L['Show Memory'], KrowiBSY_Options, {'ShowMemory'})
 	local showCPU = menuBuilder:CreateCheckbox(addOnOptions, addon.L['Show CPU'], KrowiBSY_Options, {'ShowCPU'})
 	menuBuilder:SetElementEnabled(showCPU, addon.System.IsCPUProfilingEnabled())
 	menuBuilder:CreateCheckbox(addOnOptions, addon.L['Show Increase'], KrowiBSY_Options, {'ShowIncrease'})
+	local maxAddOnsShown = menuBuilder:CreateSubmenuButton(addOnOptions, addon.L['Max Shown'])
+	menuBuilder:CreateRadio(maxAddOnsShown, addon.L['Unlimited'], KrowiBSY_Options, {'MaxAddOnsShown'}, 0)
+	for i = 10, 100, 10 do
+		menuBuilder:CreateRadio(maxAddOnsShown, tostring(i), KrowiBSY_Options, {'MaxAddOnsShown'}, i)
+	end
+	menuBuilder:AddChildMenu(addOnOptions, maxAddOnsShown)
 	local addOnSortBy = menuBuilder:CreateSubmenuButton(addOnOptions, addon.L['Sort AddOns By'])
 	menuBuilder:CreateRadio(addOnSortBy, addon.L['Name'], KrowiBSY_Options, {'AddOnSortBy'}, 'Name')
 	menuBuilder:CreateRadio(addOnSortBy, addon.L['Memory'], KrowiBSY_Options, {'AddOnSortBy'}, 'Memory')
@@ -92,7 +100,18 @@ local function CreateMenu(menuObj, caller)
 	menuBuilder:SetElementEnabled(sortByCPUIncrease, addon.System.IsCPUProfilingEnabled())
 	menuBuilder:AddChildMenu(addOnOptions, addOnSortBy)
 	menuBuilder:CreateCheckbox(addOnOptions, addon.L['Reverse Sort'], KrowiBSY_Options, {'AddOnSortReverse'})
-	menuBuilder:AddChildMenu(menuObj, addOnOptions)
+	menuBuilder:AddChildMenu(parentMenu, addOnOptions)
+end
+
+local function CreateMenu(menuObj, caller)
+	menuBuilder:CreateTitle(menuObj, addon.Metadata.Title .. ' ' .. addon.Metadata.Version)
+
+	menuBuilder:CreateDivider(menuObj)
+
+	CreateFpsOptions(menuObj)
+	CreateLatencyOptions(menuObj)
+	CreateBandwidthOptions(menuObj)
+	CreateAddOnOptions(menuObj)
 
 	menu.CreateElvUIOptionsMenu(menuBuilder, menuObj, caller)
 	menu.CreateTitanOptionsMenu(menuBuilder, menuObj, caller)

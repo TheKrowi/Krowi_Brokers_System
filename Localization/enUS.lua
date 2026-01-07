@@ -5,7 +5,7 @@ addon.L = L;
 -- [[ https://legacy.curseforge.com/wow/addons/krowi-brokers-system/localization ]] --
 -- [[ Everything after this line is automatically generated from CurseForge and is not meant for manual edit - SOURCETOKEN - AUTOGENTOKEN ]] --
 
--- [[ Exported at 2026-01-06 22-44-22 ]] --
+-- [[ Exported at 2026-01-07 23-12-00 ]] --
 L["AddOn"] = true
 L["Average FPS"] = true
 L["Avg"] = true
@@ -34,10 +34,13 @@ L["Latency"] = true
 L["Left-Click: Garbage Collect"] = true
 L["Max"] = true
 L["Max FPS"] = true
+L["Max Shown"] = true
 L["Memory"] = true
 L["Memory Increase"] = true
 L["Min"] = true
 L["Min FPS"] = true
+L["more addon"] = true
+L["more addons"] = true
 L["MS"] = true
 L["Name"] = true
 L["Out"] = true
@@ -67,5 +70,6 @@ L["Show World"] = true
 L["Show World Label"] = true
 L["Sort AddOns By"] = true
 L["Total"] = true
+L["Unlimited"] = true
 L["World"] = true
 L["World Latency"] = true

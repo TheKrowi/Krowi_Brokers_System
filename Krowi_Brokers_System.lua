@@ -2,8 +2,7 @@ local addonName, addon = ...
 
 addon.L = LibStub(addon.Libs.AceLocale):GetLocale(addonName)
 
--- Options & Saved Data
-KrowiBSY_Options = KrowiBSY_Options or {
+local defaultOptions = {
 	FpsDecimalPlaces = 0,
 	FpsShowLabel = true,
 	FpsShowCurrent = true,
@@ -33,7 +32,15 @@ KrowiBSY_Options = KrowiBSY_Options or {
 	ShowMemory = true,
 	ShowCPU = true,
 	ShowIncrease = true,
+	MaxAddOnsShown = 0,
 }
+
+KrowiBSY_Options = KrowiBSY_Options or {}
+for k, v in pairs(defaultOptions) do
+	if KrowiBSY_Options[k] == nil then
+		KrowiBSY_Options[k] = v
+	end
+end
 
 KrowiBSY_SavedData = KrowiBSY_SavedData or {}
 

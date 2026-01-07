@@ -40,6 +40,7 @@ local greenRGB, redRGB = addon.Util.Colors.GreenRGB, addon.Util.Colors.RedRGB
 local colorRGB, colorCache = {}, {}
 
 local showMemory, showCPU, showIncrease
+local addOnsShown, remainingAddOns
 local allAddonStats, totalMemory, totalMemoryIncrease, totalCPU, totalCPUIncrease
 local addonText, totalText, totalCPUText
 local memoryPercent, memoryIncreasePercent, cpuPercent, cpuIncreasePercent
@@ -88,9 +89,14 @@ local function DisplayAddonMemory()
 	showMemory = KrowiBSY_Options.ShowMemory ~= IsShiftKeyDown()
 	showCPU = cpuProfilingEnabled and (KrowiBSY_Options.ShowCPU ~= IsAltKeyDown())
 	showIncrease = KrowiBSY_Options.ShowIncrease ~= IsControlKeyDown()
+	addOnsShown = 0
 	allAddonStats, totalMemory, totalMemoryIncrease, totalCPU, totalCPUIncrease = addon.System.GetAllAddOnStats()
 	
-	for _, addonStats in ipairs(allAddonStats) do
+	for addonIndex, addonStats in ipairs(allAddonStats) do
+		if KrowiBSY_Options.MaxAddOnsShown > 0 and addonIndex > KrowiBSY_Options.MaxAddOnsShown then
+			addOnsShown = addonIndex - 1
+			break
+		end
 		memoryPercent = totalMemory > 0 and (addonStats.Memory / totalMemory) or 0
 		memoryIncreasePercent = totalMemoryIncrease ~= 0 and (addonStats.MemoryIncrease / totalMemoryIncrease) or 0
 		cpuPercent = totalCPU > 0 and (addonStats.CPU / totalCPU) or 0
@@ -144,6 +150,12 @@ local function DisplayAddonMemory()
 		if addonText then
 			GameTooltip:AddDoubleLine(addonStats.Name, addonText, 1, 1, 1)
 		end
+	end
+	
+	-- Show indicator if there are hidden addons
+	if KrowiBSY_Options.MaxAddOnsShown > 0 and #allAddonStats > KrowiBSY_Options.MaxAddOnsShown then
+		remainingAddOns = #allAddonStats - addOnsShown
+		GameTooltip:AddLine(string.format('+%d %s', remainingAddOns, remainingAddOns > 1 and addon.L['more addons'] or addon.L['more addon']), 0.7, 0.7, 0.7)
 	end
 
 	-- Build total line
