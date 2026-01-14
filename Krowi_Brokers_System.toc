@@ -1,8 +1,8 @@
-## Interface: 110207, 50503, 11508
+## Interface: 120000, 110207, 50503, 20505, 11508
 ## Title: Krowi's Brokers |cFF1D92C2[System]|r
 ## X-Prefix: KrowiBSY
 ## X-Acronym: KBSY
-## Version: 2.0
+## Version: 3.0
 ## Author: Krowi-Frostmane EU
 ## SavedVariables: KrowiBSY_Options, KrowiBSY_SavedData
 ## LoadSavedVariablesFirst: 1
@@ -21,11 +21,8 @@
 ## Category-ruRU: Посредник данных
 ## Category-zhCN: 数据管理
 ## Category-zhTW: 資料管理
-## X-Discord-Invite-Link: https://discord.gg/mdBFQJYeQZ
-## X-Discord-Server-Name: Krowi's Addons
-## X-CurseForge: https://www.curseforge.com/wow/addons/krowi-brokers-system
-## X-Curse-Project-ID: 1419755
-## X-Wago: https://addons.wago.io/addons/krowi-brokers-system
+## X-Slug: krowi-brokers-system
+## X-CurseForge-ID: 1419755
 ## X-Wago-ID: n6VPkqGd
 
 Libs\Files.xml

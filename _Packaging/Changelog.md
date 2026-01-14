@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 3.0 - 2026-01-14
+### Added
+- Support for WoW 12.0.0 (Midnight)
+- Library rework changes integrated (dev note: this change affects all addons and is a preparation for a better unified system for long term support)
+
 ## 2.0 - 2026-01-07
 ### Added
 - Added option to limit the number of addon lines shown in tooltip (configurable from 10-100 or unlimited)

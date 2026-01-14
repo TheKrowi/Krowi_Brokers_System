@@ -1,4 +1,4 @@
-local addonName, addon = ...
+local _, addon = ...
 
 local menu = {}
 addon.Menu = menu
@@ -11,9 +11,7 @@ function menu.RefreshBroker()
 end
 
 function menu.Init()
-	local lib = LibStub('Krowi_MenuBuilder-1.0')
-
-	menuBuilder = lib:New({
+	menuBuilder = addon.MenuBuilder:New({
 		uniqueTag = addon.Metadata.Prefix .. '_RIGHT_CLICK_MENU_OPTIONS',
 		callbacks = {
 			OnCheckboxSelect = function(filters, keys)

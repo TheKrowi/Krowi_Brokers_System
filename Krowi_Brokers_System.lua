@@ -1,7 +1,5 @@
 local addonName, addon = ...
 
-addon.L = LibStub(addon.Libs.AceLocale):GetLocale(addonName)
-
 local defaultOptions = {
 	FpsDecimalPlaces = 0,
 	FpsShowLabel = true,
@@ -280,11 +278,9 @@ local function OnEvent(event, ...)
 	end
 end
 
--- Initialization
-local brokers = LibStub('Krowi_Brokers-1.0')
 addon.System.Init()
 addon.RefreshDisplayConfiguration()
-brokers:InitBroker(
+addon.Broker:InitBroker(
 	addonName,
 	addon,
 	OnEnter,
@@ -292,4 +288,6 @@ brokers:InitBroker(
 	OnClick,
 	OnEvent
 )
-brokers:RegisterEvents('PLAYER_ENTERING_WORLD')
+addon.Broker:RegisterEvents(
+	'PLAYER_ENTERING_WORLD'
+)

@@ -72,6 +72,44 @@
             "include":"*.toc",
             "deleteTargetOnDeploy": false
         },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"**/*.{lua,blp,tga,xml}",
+            "exclude":"**/{.git,.vscode,_Packaging,References}/**",
+            "deleteTargetOnDeploy": true
+        },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"LICENSE",
+            "deleteTargetOnDeploy": false
+        },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"*.toc",
+            "deleteTargetOnDeploy": false
+        },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_classic_era_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"**/*.{lua,blp,tga,xml}",
+            "exclude":"**/{.git,.vscode,_Packaging,References}/**",
+            "deleteTargetOnDeploy": true
+        },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_classic_era_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"LICENSE",
+            "deleteTargetOnDeploy": false
+        },
+        {
+            "source":"E:\\World of Warcraft Addon Development\\Krowi_Brokers_System",
+            "target":"H:\\World of Warcraft\\_classic_era_ptr_\\Interface\\AddOns\\Krowi_Brokers_System",
+            "include":"*.toc",
+            "deleteTargetOnDeploy": false
+        },
         // _classic_
         // _beta_
         // _xptr_
@@ -106,6 +144,7 @@
         "IsAltKeyDown",
         "SetCVar",
         "ReloadUI",
-        "ElvUI"
+        "ElvUI",
+        "KROWI_LIBMAN"
     ],
 }
