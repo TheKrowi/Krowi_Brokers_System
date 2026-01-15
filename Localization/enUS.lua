@@ -3,7 +3,7 @@ local L = addon.Localization.NewDefaultLocale()
 
 -- [[ Everything after this line is automatically generated from CurseForge and is not meant for manual edit - SOURCETOKEN - AUTOGENTOKEN ]] --
 
--- [[ Exported at 2026-01-07 23-12-00 ]] --
+-- [[ Exported at 2026-01-15 22-05-47 ]] --
 L["AddOn"] = true
 L["Average FPS"] = true
 L["Avg"] = true
